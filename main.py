@@ -12,17 +12,6 @@ def draw_background():
             pygame.draw.circle(screen, knightTileColor,
                                (tileSize * j + tileSize // 2, tileSize * i + tileSize // 2), tileSize // 4, 0)
 
-#
-# def draw_tiles():
-#     for i in range(board_size[0]):
-#         for j in range(board_size[1]):
-#             if knight_pos == (i, j):
-#                 pygame.draw.circle(screen, knightTileColor,
-#                                    (tileSize * j + tileSize // 2, tileSize * i + tileSize // 2), tileSize // 4, 0)
-#             elif knight_tour.board[i][j] != 0:
-#                 pygame.draw.circle(screen, visitedTileColor,
-#                                    (tileSize * j + tileSize // 2, tileSize * i + tileSize // 2), tileSize // 4,  0)
-
 
 def draw_line(start, end):
     pygame.draw.line(screen, lineColor,
@@ -43,7 +32,7 @@ knight_tour = KnightTour(board_size=board_size)
 pygame.init()
 screen = pygame.display.set_mode((tileSize*board_size[1], tileSize*board_size[0]))
 clock = pygame.time.Clock()
-fps = 5
+fps = 1
 
 whiteTileColor = (245, 245, 245)
 blackTileColor = (100, 100, 100)
@@ -86,29 +75,30 @@ while True:
                 #     skip = True
         if runUpdate:
             num_of_active, num_of_changes = knight_tour.update_neurons()
-            print('active', num_of_active, 'changes', num_of_changes)
+            # print('active', num_of_active, 'changes', num_of_changes)
             draw_background()
             for vertex_set in knight_tour.get_active_neurons_vertices():
                 vertex1, vertex2 = vertex_set
                 draw_line(vertex1, vertex2)
 
             if num_of_changes == 0:
-                print('wow!')
                 break
 
             if knight_tour.check_degree():
                 even = True
-                print('yaaay')
                 break
             iterations += 1
             if iterations == 20:
                 break
-        time += 1
-        if even:
-            print('yuppp')
+    time += 1
+    if even:
+        print('all vertices have even degree')
+        if knight_tour.check_connected_components():
+            print('solution found!! a hamiltonian graph')
             runUpdate = False
-            break
+        else:
+            even = False
 
         pygame.display.set_caption("Knight\'s Tour " + str(fps) + "fps")
         pygame.display.update()
-        # msElapsed = clock.tick(fps)
+        msElapsed = clock.tick(fps)

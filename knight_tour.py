@@ -16,8 +16,8 @@ class KnightTour:
         self.neuron_outputs = np.array([])
         self.neuron_states = np.array([])
         self.neuron_neighbours = []
-        print('------first-------')
-        self.print_board(self.board)
+        # print('------first-------')
+        # self.print_board(self.board)
 
         self.init()
 
@@ -48,28 +48,28 @@ class KnightTour:
                         # print('neuron Num = ', neuron_num)
                         self.neuron_vertices.append({(x1, y1), (x2, y2)})
                         neuron_num += 1
-        # exit()
-        print("----init-----")
-        print('board')
-        self.print_board(self.board)
-        print('vertices')
-        self.print_board(self.neuron_vertices)
+        # # exit()
+        # print("----init-----")
+        # print('board')
+        # self.print_board(self.board)
+        # print('vertices')
+        # self.print_board(self.neuron_vertices)
 
         for i in range(len(self.neuron_vertices)):
             vertex1, vertex2 = self.neuron_vertices[i]
             neighbours = self.board[vertex1[0]][vertex1[1]].union(self.board[vertex2[0]][vertex2[1]]) - {i}
             self.neuron_neighbours.append(neighbours)
 
-        print('neighbours')
-        self.print_board(self.neuron_neighbours)
+        # print('neighbours')
+        # self.print_board(self.neuron_neighbours)
 
     def initialize_neurons(self):
         self.neuron_outputs = np.random.randint(2, size=(len(self.neuron_vertices)), dtype=np.int16)
         self.neuron_states = np.zeros((len(self.neuron_vertices)), dtype=np.int16)
-        print('states:')
-        print(self.neuron_states)
-        print('outputs')
-        print(self.neuron_outputs)
+        # print('states:')
+        # print(self.neuron_states)
+        # print('outputs')
+        # print(self.neuron_outputs)
 
     def update_neurons(self):
         sum_of_neighbours = np.zeros((len(self.neuron_states)), dtype=np.int16)
@@ -82,11 +82,11 @@ class KnightTour:
         self.neuron_outputs[np.argwhere(next_state > 3).ravel()] = 1
         self.neuron_states = next_state
         number_of_active = len(self.neuron_outputs[self.neuron_outputs == 1])
-        print('____________________update________________________')
-        print('states:')
-        print(self.neuron_states)
-        print('output')
-        print(self.neuron_outputs)
+        # print('____________________update________________________')
+        # print('states:')
+        # print(self.neuron_states)
+        # print('output')
+        # print(self.neuron_outputs)
 
         return number_of_active, number_of_changes
 
@@ -113,10 +113,28 @@ class KnightTour:
                     break
             time += 1
             if even:
-                print(time)
-                print(n)
-                print('yay')
-                exit()
+                if self.check_connected_components():
+                    print('solution found!!')
+                    return
+                else:
+                    even = False
+
+    def check_connected_components(self):
+        active_neuron_indices = np.argwhere(self.neuron_outputs == 1).ravel()
+        connected = self.dfs_through_neurons(neuron=active_neuron_indices[0], active_neurons=active_neuron_indices)
+        if connected:
+            return True
+        return False
+
+    def dfs_through_neurons(self, neuron, active_neurons):
+        active_neurons = np.setdiff1d(active_neurons, [neuron])
+        active_neighbours = np.intersect1d(active_neurons, list(self.neuron_neighbours[neuron]))
+        if len(active_neighbours) is 0:
+            if len(active_neurons) is 0:
+                return True
+            else:
+                return False
+        return self.dfs_through_neurons(neuron=active_neighbours[0], active_neurons=active_neurons)
 
     def get_active_neurons_vertices(self):
         active_neuron_indices = np.argwhere(self.neuron_outputs == 1).ravel()
@@ -133,10 +151,9 @@ class KnightTour:
             vertex1, vertex2 = self.neuron_vertices[i]
             degree[vertex1[0]][vertex1[1]] += 1
             degree[vertex2[0]][vertex2[1]] += 1
-        print('____________________check degree_______________________')
-        print(degree)
+        # print('____________________check degree_______________________')
+        # print(degree)
         if degree[degree != 2].size is 0:
-            print("YAAAAAAAAAAAAAAAAAAAAAAAY")
             return True
         return False
 
@@ -148,8 +165,8 @@ class KnightTour:
                 neighbours.add((new_x, new_y))
         return neighbours
 
-
-tour = KnightTour((6, 6))
-tour.neural_network()
+#
+# tour = KnightTour((6, 6))
+# tour.neural_network()
 
 
