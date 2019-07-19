@@ -17,3 +17,7 @@ for the **warnsdroff rule** version of knight's tour please visit https://github
     - uncomment the 2 last lines in *knight_tour.py*(and you can change the board size).
     - run *knight_tour.py*.
     
+as Dmitry Brant mentions in his [blog](https://dmitrybrant.com/knights-tour).
+> The set of degree-2 subgraphs naturally includes Hamiltonian circuits (re-entrant Knight’s Tours). However, there are many other solutions that would satisfy the network that are not knight’s tours. For example, the network could discover two or more small independent curcuits within the knight’s graph.
+
+in this implementation the `all vertices have even degree` output indicates that a solution has been found but it may not be a knight's tour.in that case it should reinitialize all states and outputs to find another solution.
