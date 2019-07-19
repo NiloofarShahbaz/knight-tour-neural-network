@@ -64,18 +64,8 @@ while True:
                     fps -= 1
                     if fps == 0:
                         fps = 1
-                # if event.key == pygame.K_r:
-                #     board = [[emptyTile for _ in range(n)] for _ in range(n)]
-                #     knightXPos = 0
-                #     knightYPos = 0
-                #     board[knightYPos][knightXPos] = knightTile
-                #     draw_background()
-                #     draw_tiles()
-                #     moveNum = 0
-                #     skip = True
         if runUpdate:
             num_of_active, num_of_changes = knight_tour.update_neurons()
-            # print('active', num_of_active, 'changes', num_of_changes)
             draw_background()
             for vertex_set in knight_tour.get_active_neurons_vertices():
                 vertex1, vertex2 = vertex_set

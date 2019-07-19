@@ -94,7 +94,7 @@ class KnightTour:
         even = False
         time = 0
         while True:
-            print('_________initalize_neurons__________________________')
+            # print('_________initalize_neurons__________________________')
             self.initialize_neurons()
             n = 0
             while True:
@@ -106,15 +106,15 @@ class KnightTour:
                     break
                 if self.check_degree():
                     even = True
-                    print('okay?')
                     break
                 n += 1
                 if n == 20:
                     break
             time += 1
             if even:
+                print('all vertices have even degree')
                 if self.check_connected_components():
-                    print('solution found!!')
+                    print('solution found!! a hamiltonian graph')
                     return
                 else:
                     even = False
@@ -165,7 +165,7 @@ class KnightTour:
                 neighbours.add((new_x, new_y))
         return neighbours
 
-#
+
 # tour = KnightTour((6, 6))
 # tour.neural_network()
 
