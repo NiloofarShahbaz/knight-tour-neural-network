@@ -9,7 +9,7 @@ for the **warnsdroff rule** version of knight's tour please visit https://github
 
 ## Usage
 - #### With GUI
-    - install the requiremnts in the *requirements.txt* file.
+    - install the requirements in the *requirements.txt* file.
     - you can change the **board size** in line 22 of *main.py* file.
     - run *main.py*.
 - #### Without GUI
