@@ -204,7 +204,7 @@ class KnightTour:
         """
         visited = []
         current_vertex = (0, 0)
-        labels = np.zeros(self.board_size)
+        labels = np.zeros(self.board_size, dtype=np.int16)
         # gets the index of active neurons.
         active_neuron_indices = np.argwhere(self.neuron_outputs == 1).ravel()
         i = 0

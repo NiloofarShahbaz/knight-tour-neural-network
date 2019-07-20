@@ -23,14 +23,14 @@ board_size = (6, 6)
 screenSizeX = 800
 screenSizeY = 800
 
-if screenSizeX//board_size[1] >= screenSizeY//board_size[0]:
+if screenSizeX // board_size[1] >= screenSizeY // board_size[0]:
     tileSize = screenSizeY // board_size[0]
 else:
     tileSize = screenSizeX // board_size[1]
 
 knight_tour = KnightTour(board_size=board_size)
 pygame.init()
-screen = pygame.display.set_mode((tileSize*board_size[1], tileSize*board_size[0]))
+screen = pygame.display.set_mode((tileSize * board_size[1], tileSize * board_size[0]))
 clock = pygame.time.Clock()
 fps = 1
 
@@ -82,7 +82,7 @@ while True:
                 break
     time += 1
     if even:
-        print('all vertices have even degree')
+        print('all vertices have degree=2')
         if knight_tour.check_connected_components():
             print('solution found!!')
             knight_tour.get_solution()
