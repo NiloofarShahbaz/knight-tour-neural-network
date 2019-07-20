@@ -84,7 +84,8 @@ while True:
     if even:
         print('all vertices have even degree')
         if knight_tour.check_connected_components():
-            print('solution found!! a hamiltonian graph')
+            print('solution found!!')
+            knight_tour.get_solution()
             runUpdate = False
         else:
             even = False
